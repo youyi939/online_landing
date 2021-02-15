@@ -9,9 +9,10 @@ import org.springframework.security.core.GrantedAuthority;
  * @Date: Create in  2021/2/15 下午3:35
  */
 @Data
-public class RolePo implements GrantedAuthority {
+public class RolePo implements GrantedAuthority{
 
     private static final long serialVersionUID = 1L;
+
     private String username;
     private String authority;
 

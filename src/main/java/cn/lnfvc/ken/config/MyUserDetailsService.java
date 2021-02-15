@@ -27,6 +27,7 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserPo userPo =userDao.loadUser(username);
-        return new User(userPo.getUsername(),new BCryptPasswordEncoder().encode(userPo.getPassword()),AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_vip2"));
+//        return new User(userPo.getUsername(),new BCryptPasswordEncoder().encode(userPo.getPassword()),AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_vip2"));
+        return userPo;
     }
 }
