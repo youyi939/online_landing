@@ -9,12 +9,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  */
 public class Password {
     public static void main(String[] args) {
-        System.out.println(findPassword("123"));
+        System.out.println(findPassword("321"));
     }
 
     public static String findPassword(String msg){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String password = passwordEncoder.encode("123");
+        String password = passwordEncoder.encode(msg);
         return password;
     }
 }

@@ -1,5 +1,6 @@
 package cn.lnfvc.ken.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Description:
  * @Date: Create in  2021/1/29 上午11:09
  */
+@CrossOrigin
 @RestController
 public class LandController {
 
@@ -21,6 +23,14 @@ public class LandController {
     @GetMapping(value = "/unauth")
     public String unauth(){
         return "unauth!!!";
+    }
+
+//    默认所有权限均可访问
+    @CrossOrigin
+    @PostMapping(value = "/hello")
+    public String index(){
+        System.out.println("hello");
+        return "hello word";
     }
 
 //    登陆成功后默认返回此接口
@@ -38,5 +48,10 @@ public class LandController {
     public String vip2(){
         return "this is vip2 page";
     }
+
+//    @GetMapping("/login")
+//    public String login() {
+//        return "尚未登录，请登录!";
+//    }
 
 }
