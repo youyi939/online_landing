@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @Description:
  * @Date: Create in  2021/1/29 上午11:09
  */
-@CrossOrigin
-@RestController
+//@CrossOrigin
+//@RestController
 public class LandController {
 
 //    受保护资源

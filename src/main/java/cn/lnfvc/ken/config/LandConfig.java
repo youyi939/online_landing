@@ -1,5 +1,7 @@
 package cn.lnfvc.ken.config;
 
+import cn.lnfvc.ken.filter.JwtAuthorizationFilter;
+import cn.lnfvc.ken.filter.JwtValidationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -36,28 +39,40 @@ public class LandConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        //访问无权限接口时返回
-        http.exceptionHandling().accessDeniedPage("/unauth");
-
-        http.logout()
-                .logoutUrl("/logout")      //指定退出页面
-                .logoutSuccessUrl("/index").permitAll();      //退出之后返回哪个页面
-
-        http.formLogin()
-//                .loginPage("/login")               //自定义登录页面,当没有权限时会返回它,在controller中另写一个接口会替代security默认当登陆页面
-                .loginProcessingUrl("/index")            //自定义登录路径
-                .defaultSuccessUrl("/suc").permitAll();       //登录成功后返回的路径
-
-
-        //配置接口访问权限
-        http.authorizeRequests()
-                .antMatchers("/","/index","/user/login","/hello").permitAll()    //不需要任何权限都可以访问
-                .antMatchers("/vip").hasAuthority("vip1")   //当前登录用户只有具有vip1的权限时才能访问路径
-                .antMatchers("/vip2").hasRole("vip2")
-                .anyRequest().authenticated();
+//        //访问无权限接口时返回
+//        http.exceptionHandling().accessDeniedPage("/unauth");
+//
+////        http.logout()
+////                .logoutUrl("/logout")      //指定退出页面
+////                .logoutSuccessUrl("/index").permitAll();      //退出之后返回哪个页面
+////
+////        http.formLogin()
+//////                .loginPage("/login")               //自定义登录页面,当没有权限时会返回它,在controller中另写一个接口会替代security默认当登陆页面
+////                .loginProcessingUrl("/index")            //自定义登录路径
+////                .defaultSuccessUrl("/suc").permitAll();       //登录成功后返回的路径
+//
+//        //配置接口访问权限
+//        http.authorizeRequests()
+//                .antMatchers("/","/index","/user/login","/hello").permitAll()    //不需要任何权限都可以访问
+//                .antMatchers("/vip").hasAuthority("vip1")   //当前登录用户只有具有vip1的权限时才能访问路径
+//                .antMatchers("/vip2").hasRole("vip2")
+//                .anyRequest().authenticated();
 
         //配置跨域
         http.csrf().disable().cors();
+
+        http.authorizeRequests()
+                .antMatchers("/api/guest").permitAll()      //游客接口允许所有人访问
+                .antMatchers("/vip").hasAuthority("ROLE_vip1")   //当前登录用户只有具有vip1的权限时才能访问路径
+                .anyRequest()
+                .authenticated()
+                .and()
+                .httpBasic()
+                .and()
+                .addFilter(new JwtAuthorizationFilter(authenticationManager()))
+                .addFilter(new JwtValidationFilter(authenticationManager()))
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);    //设置session失效
     }
 
     @Bean
