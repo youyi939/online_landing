@@ -13,5 +13,12 @@ import java.util.List;
 @Mapper
 public interface UserDao {
     UserPo loadUser(String username);
+
+    int insert_user(String username,String password);
+
+    int insert_auth(String username,String role);
+
+    String find_by_name(String username);
+
 }
 

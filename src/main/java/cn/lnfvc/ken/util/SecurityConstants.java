@@ -2,7 +2,7 @@ package cn.lnfvc.ken.util;
 
 /**
  * @Author: KenChen
- * @Description:
+ * @Description: 常用变量管理
  * @Date: Create in  2021/2/27 下午9:16
  */
 public final class SecurityConstants {
@@ -11,6 +11,6 @@ public final class SecurityConstants {
     public static final String TOKEN_HEADER = "Authorization";
     public static final String TOKEN_PREFIX = "Bearer";
     public static final String TOKEN_TYPE = "JWT";
-    public static final String TOKEN_ISSUER = "secure-api";
+    public static final String TOKEN_ISSUER = "www.cjlly.com";
     public static final String TOKEN_AUDIENCE = "secure-app";
 }

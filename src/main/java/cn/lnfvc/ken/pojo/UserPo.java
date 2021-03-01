@@ -5,14 +5,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
 /**
  * @Author: KenChen
- * @Description:
+ * @Description: 用户实体类
  * @Date: Create in  2021/1/29 上午11:26
  */
 @Data

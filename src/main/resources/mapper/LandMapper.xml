@@ -20,4 +20,17 @@
 		 	where users.username=#{username}
 	</select>
 
+
+	<select id="find_by_name" resultType="String">
+		select username from users where username = #{username}
+	</select>
+
+	<insert id="insert_user" >
+		insert into users values(#{username},#{password})
+	</insert>
+
+	<insert id="insert_auth">
+		insert into authorities values(#{username},#{role});
+	</insert>
+
 </mapper>
