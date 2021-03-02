@@ -4,6 +4,7 @@ import cn.lnfvc.ken.pojo.UserPo;
 import cn.lnfvc.ken.util.TokenUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -23,6 +24,8 @@ import java.util.stream.Collectors;
  * @Description: 登陆过滤器，认证成功后分发token
  * @Date: Create in  2021/2/22 下午3:35
  */
+
+@Slf4j
 public class JwtAuthorizationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
@@ -52,6 +55,7 @@ public class JwtAuthorizationFilter extends UsernamePasswordAuthenticationFilter
 
         response.setHeader("Authorization","Bearer "+token);
         response.setHeader("RefreshToken","Bearer "+refreshToken);
+        log.info("用户：{}登陆成功，已发送token及refreshToken",user.getUsername());
     }
 
     private UserPo pareData(HttpServletRequest request)throws  IOException{

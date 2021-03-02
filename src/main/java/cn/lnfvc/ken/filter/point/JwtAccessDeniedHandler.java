@@ -1,7 +1,9 @@
 package cn.lnfvc.ken.filter.point;
 
 import cn.lnfvc.ken.pojo.CommonResult;
+import cn.lnfvc.ken.util.LandUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -20,14 +22,9 @@ import java.io.IOException;
 public class JwtAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException, ServletException {
-        ObjectMapper objectMapper = new ObjectMapper();
         response.setStatus(200);
         response.setContentType("text/json;charset=utf-8");
-        String json = objectMapper.writeValueAsString(new CommonResult<String>(400,"无访问权限: "+request.getRequestURI()));
-        response.getWriter().write(json);
-
-        //// TODO: 2021/3/1 用户访问无权限接口log
-        System.out.println(request.getRequestURI());
+        response.getWriter().write(LandUtil.createResponseBody(400,"无访问权限"));
 
     }
 }

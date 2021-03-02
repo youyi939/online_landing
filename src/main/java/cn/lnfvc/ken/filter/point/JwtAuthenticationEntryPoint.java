@@ -1,6 +1,7 @@
 package cn.lnfvc.ken.filter.point;
 
 import cn.lnfvc.ken.pojo.CommonResult;
+import cn.lnfvc.ken.util.LandUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -19,11 +20,9 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-        ObjectMapper objectMapper = new ObjectMapper();
         response.setStatus(200);
         response.setContentType("text/json;charset=utf-8");
-        String json = objectMapper.writeValueAsString(new CommonResult<String>(402,"认证失败"));
-        response.getWriter().write(json);
+        response.getWriter().write(LandUtil.createResponseBody(401,"认证失败"));
     }
 
 }
